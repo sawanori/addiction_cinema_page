@@ -8,11 +8,13 @@
      ・装飾・角丸ゼロ。階層は色の反転とスケールだけでつくる
      ・CTAは必ず「テキスト＋→」
    写真素材ゼロのため、色面・巨大タイポ・ハーフトーン/同心円の図形で構成する。
+   テーマカラーは #a37075（くすんだローズ）。白文字を載せる面と明るい紙面上の小文字だけ
+   コントラスト確保のため沈み色 #8C5B60 を使う。
    ============================================================ */
 
 :root{
-  --red:#E60022;        /* 地色（全面） */
-  --red-dp:#C4001C;     /* 朱の沈み（境界・ホバー） */
+  --red:#a37075;        /* 地色（全面） */
+  --red-dp:#8C5B60;     /* 沈み（白文字を載せる面・明るい紙面上の小文字・ホバー） */
   --ink:#0A0A0A;        /* 文字・黒箱 */
   --panel:#111111;      /* パネル地 */
   --white:#FFFFFF;
@@ -29,7 +31,7 @@
 
   /* 黒地に落とすハーフトーン（Locarnoのヒョウ柄ドットに相当する図形言語） */
   --halftone:radial-gradient(circle at center, rgba(255,255,255,.16) 22%, transparent 23%);
-  --halftone-red:radial-gradient(circle at center, rgba(230,0,34,.55) 22%, transparent 23%);
+  --halftone-red:radial-gradient(circle at center, rgba(163,112,117,.55) 22%, transparent 23%);
   --halftone-ink:radial-gradient(circle at center, rgba(10,10,10,.14) 22%, transparent 23%);
 }
 
@@ -85,7 +87,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
 .btn:hover::after{transform:translateX(5px);}
 .btn--light{background:var(--white);color:var(--ink);}
 .btn--light:hover{background:var(--ink);color:var(--white);}
-.btn--red{background:var(--red);color:var(--white);}
+.btn--red{background:var(--red-dp);color:var(--white);}
 
 .arrow{
   display:inline-flex;align-items:center;gap:10px;
@@ -183,10 +185,10 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
 .hero__meta dd{font-weight:700;font-size:clamp(15px,1.4vw,19px);margin-top:2px;}
 .hero__actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:clamp(20px,2.4vw,30px);}
 /* 暗いキービジュアル上では黒ピルが沈むため、主ボタンは朱赤にする */
-.hero .btn{background:var(--red);color:var(--white);}
+.hero .btn{background:var(--red-dp);color:var(--white);}
 .hero .btn:hover{background:var(--white);color:var(--ink);}
 .hero .btn--light{background:var(--white);color:var(--ink);}
-.hero .btn--light:hover{background:var(--red);color:var(--white);}
+.hero .btn--light:hover{background:var(--red-dp);color:var(--white);}
 
 /* ---------- クイックリンク（黒箱3枚） ---------- */
 .quick{padding:clamp(32px,4vw,56px) 0 clamp(40px,5vw,72px);}
@@ -393,7 +395,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
 }
 .doc__sheet ol > li::before{
   content:"(" counter(doc) ")";position:absolute;left:0;top:0;
-  font-family:var(--font-en);font-weight:700;font-size:12.5px;color:var(--red);
+  font-family:var(--font-en);font-weight:700;font-size:12.5px;color:var(--red-dp);
 }
 .doc__sheet ul > li{
   position:relative;padding-left:22px;margin-bottom:8px;font-size:14px;line-height:2.05;
