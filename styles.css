@@ -304,9 +304,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
 /* ---------- 上映作品（Locarno の Official Selection に相当） ----------
    写真はカードに入れず、地色の上に直接置く。まわりのUIを変えないことで
    6作品の色がそれぞれ立ちつつ、サイトの世界観は崩れない。 */
-.films{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,2.4vw,34px) 16px;}
-.film{display:flex;flex-direction:column;}
-.film--lead{grid-column:span 2;}
+.films{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(20px,2.4vw,34px) 16px;}
+.film{display:flex;flex-direction:column;grid-column:span 2;}
+.film--lead{grid-column:span 3;}
 .film__img{
   position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--ink);
 }
@@ -329,6 +329,12 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
   font-family:var(--font-en);font-weight:700;font-size:13px;letter-spacing:.1em;
   padding:6px 12px;
 }
+.film__time{
+  position:absolute;right:0;top:0;z-index:2;
+  background:var(--ink);color:var(--bone);
+  font-family:var(--font-en);font-weight:700;font-size:12.5px;letter-spacing:.08em;
+  padding:6px 12px;
+}
 .film__k{
   display:block;margin-top:14px;
   font-family:var(--font-en);font-weight:700;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
@@ -339,7 +345,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
   display:block;margin-top:6px;font-weight:900;
   font-size:clamp(18px,1.9vw,26px);line-height:1.45;
 }
-.film--lead .film__t{font-size:clamp(22px,2.6vw,36px);}
+.film--lead .film__t{font-size:clamp(21px,2.2vw,31px);}
 .film__en{
   display:block;margin-top:2px;
   font-family:var(--font-en);font-weight:700;font-size:13px;letter-spacing:.02em;color:var(--mute-ink);
@@ -534,7 +540,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
   .scard--tall{min-height:340px;}
   .editorial{grid-template-columns:1fr;}
   .films{grid-template-columns:repeat(2,1fr);}
-  .film--lead{grid-column:span 2;}
+  .film--lead{grid-column:span 3;}
   .news{grid-template-columns:repeat(2,1fr);}
   .footer__cols{grid-template-columns:repeat(3,1fr);}
   .newsletter__grid{grid-template-columns:1fr;}
@@ -572,6 +578,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
   .sections-grid{grid-template-columns:1fr;}
   .news{grid-template-columns:1fr;}
   .films{grid-template-columns:1fr;}
+  .film{grid-column:span 1;}
   .film--lead{grid-column:span 1;}
   .footer__cols{grid-template-columns:repeat(2,1fr);}
   .hero__meta{gap:0 24px;}
