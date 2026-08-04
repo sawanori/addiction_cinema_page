@@ -304,9 +304,10 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
 /* ---------- 上映作品（Locarno の Official Selection に相当） ----------
    写真はカードに入れず、地色の上に直接置く。まわりのUIを変えないことで
    6作品の色がそれぞれ立ちつつ、サイトの世界観は崩れない。 */
-.films{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(20px,2.4vw,34px) 16px;}
-.film{display:flex;flex-direction:column;grid-column:span 2;}
-.film--lead{grid-column:span 3;}
+/* 12分割。メイン2本を半分ずつの大カードで1段目、残り4本を2段目に並べて端数を出さない */
+.films{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(20px,2.4vw,34px) 16px;}
+.film{display:flex;flex-direction:column;grid-column:span 3;}
+.film--lead{grid-column:span 6;}
 .film__img{
   position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--ink);
 }
@@ -540,7 +541,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
   .scard--tall{min-height:340px;}
   .editorial{grid-template-columns:1fr;}
   .films{grid-template-columns:repeat(2,1fr);}
-  .film--lead{grid-column:span 3;}
+  .film{grid-column:span 1;}
+  .film--lead{grid-column:span 2;}
   .news{grid-template-columns:repeat(2,1fr);}
   .footer__cols{grid-template-columns:repeat(3,1fr);}
   .newsletter__grid{grid-template-columns:1fr;}
