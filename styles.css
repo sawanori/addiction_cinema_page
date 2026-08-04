@@ -176,7 +176,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
 .hero__dots{
   position:absolute;inset:-10% -5% auto -5%;height:120%;
   background-image:var(--halftone);
-  background-size:26px 26px;opacity:.28;pointer-events:none;
+  /* 写真の上では網が強いと絵が読みづらくなるため、地の面より弱く・粗くする */
+  background-size:34px 34px;opacity:.15;pointer-events:none;
   animation:driftDots 26s linear infinite;
 }
 @keyframes driftDots{from{transform:translate3d(0,0,0);}to{transform:translate3d(26px,26px,0);}}
