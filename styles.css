@@ -13,8 +13,10 @@
    ============================================================ */
 
 :root{
-  --red:#a37075;        /* 地色（全面） */
+  --red:#a37075;        /* 地色（全面）＝1版目のインキ */
   --red-dp:#8C5B60;     /* 沈み（白文字を載せる面・明るい紙面上の小文字・ホバー） */
+  --wine:#5B2F3A;       /* 2版目：深い葡萄。黒と地色のあいだの階調を埋める */
+  --bone:#EDE3D4;       /* 3版目：生成り。澱みの中に明るい段をつくる */
   --ink:#0A0A0A;        /* 文字・黒箱 */
   --panel:#111111;      /* パネル地 */
   --white:#FFFFFF;
@@ -30,14 +32,21 @@
   --font-jp:"Noto Sans JP","Hiragino Sans",Meiryo,sans-serif;
 
   /* 黒地に落とすハーフトーン（Locarnoのヒョウ柄ドットに相当する図形言語） */
-  --halftone:radial-gradient(circle at center, rgba(255,255,255,.16) 22%, transparent 23%);
-  --halftone-red:radial-gradient(circle at center, rgba(163,112,117,.55) 22%, transparent 23%);
-  --halftone-ink:radial-gradient(circle at center, rgba(10,10,10,.14) 22%, transparent 23%);
+  --halftone:radial-gradient(circle at center, rgba(237,227,212,.30) 26%, transparent 27%);
+  --halftone-red:radial-gradient(circle at center, rgba(163,112,117,.85) 26%, transparent 27%);
+  --halftone-ink:radial-gradient(circle at center, rgba(10,10,10,.30) 26%, transparent 27%);
 }
 
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 html,body{overflow-x:clip;}
+/* 紙の地合い。フラットな面が「泥」に見えるのを防ぐ、ごく薄い粒状のノイズ */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.42'/%3E%3C/svg%3E");
+  mix-blend-mode:multiply;opacity:.16;
+}
+body > *{position:relative;z-index:1;}
 body{
   margin:0;background:var(--red);color:var(--ink);
   font-family:var(--font-jp);font-size:16px;line-height:1.75;
@@ -58,7 +67,12 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
   font-family:var(--font-en);font-weight:700;
   font-size:clamp(40px,6.6vw,104px);line-height:.95;letter-spacing:-.035em;
   text-transform:uppercase;
+  /* 版ズレ（シルクスクリーンの見当ズレ）。ぼかしのない硬いオフセットで刷り物の質感を出す */
+  text-shadow:.055em .055em 0 var(--bone);
 }
+.display--white{text-shadow:.055em .055em 0 var(--red);}
+.display--onwine{text-shadow:.055em .055em 0 var(--red);}
+.display--flat{text-shadow:none;}
 .display--sm{font-size:clamp(30px,3.6vw,56px);}
 .display--xl{font-size:clamp(50px,10vw,156px);}
 .jp-head{
@@ -165,7 +179,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
 @keyframes driftDots{from{transform:translate3d(0,0,0);}to{transform:translate3d(26px,26px,0);}}
 .hero__inner{position:relative;z-index:2;width:100%;}
 .hero__edition{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:10px;}
-.hero__title{margin:0 0 6px;}
+.hero__title{margin:0 0 6px;text-shadow:.05em .05em 0 var(--red-dp);}
 .hero__title span{display:block;}
 .hero__jp{font-weight:900;font-size:clamp(17px,2vw,26px);letter-spacing:.02em;margin-top:14px;}
 .hero__meta{
@@ -194,9 +208,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
 .quick{padding:clamp(32px,4vw,56px) 0 clamp(40px,5vw,72px);}
 .quick__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
 .qcard{
+  position:relative;overflow:hidden;
   display:flex;align-items:center;justify-content:space-between;gap:18px;
   background:var(--ink);color:var(--white);padding:26px 28px;min-height:132px;
   transition:transform .3s ease,background .3s ease;
+}
+.qcard::after{
+  content:"";position:absolute;right:-30px;bottom:-30px;width:180px;height:180px;
+  background-image:var(--halftone-red);background-size:14px 14px;opacity:.5;pointer-events:none;
 }
 .qcard:hover{transform:translateY(-4px);background:#000;}
 .qcard__t{display:block;font-family:var(--font-en);font-weight:700;font-size:19px;letter-spacing:-.01em;text-transform:uppercase;}
@@ -210,11 +229,28 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
   position:relative;background:var(--panel);color:var(--white);overflow:hidden;
   padding:clamp(48px,6vw,96px) 0;
 }
-.panel__dots{
-  position:absolute;inset:0;background-image:var(--halftone);background-size:30px 30px;
-  opacity:.5;pointer-events:none;
+/* 2版目のインキで刷った帯。黒→wine→rose→bone と階調が段になる */
+.panel--wine{
+  background:var(--wine);
+  /* この帯の中だけインキを1段明るくする。HTML側の style="color:var(--red)" も
+     この再定義を参照するため、直書きを書き換えずにコントラストを確保できる */
+  --red:#D4A8AE;
 }
-.panel__dots--red{background-image:var(--halftone-red);opacity:.65;}
+.panel--wine .panel__lead{color:var(--bone);}
+.panel--wine .panel__lead em{color:var(--red);}
+.panel--wine .panel__body,.panel--wine .muted{color:rgba(237,227,212,.72);}
+.panel--wine .table--dark th,.panel--wine .table--dark td{border-color:rgba(237,227,212,.28);}
+/* トンボ（トリムマーク）。刷版らしさを出す装飾 */
+.panel::before,.panel::after{
+  content:"";position:absolute;width:26px;height:26px;pointer-events:none;opacity:.5;
+}
+.panel::before{left:18px;top:18px;border-left:1px solid var(--bone);border-top:1px solid var(--bone);}
+.panel::after{right:18px;bottom:18px;border-right:1px solid var(--bone);border-bottom:1px solid var(--bone);}
+.panel__dots{
+  position:absolute;inset:0;background-image:var(--halftone);background-size:15px 15px;
+  opacity:.42;pointer-events:none;
+}
+.panel__dots--red{background-image:var(--halftone-red);opacity:.5;}
 .panel .wrap{position:relative;z-index:2;}
 .panel__grid{display:grid;grid-template-columns:minmax(0,.36fr) minmax(0,.64fr);gap:clamp(24px,4vw,64px);align-items:start;}
 .panel__lead{
@@ -253,8 +289,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
 .scard__d{display:block;font-size:13px;line-height:1.85;margin-top:10px;color:var(--mute);max-width:46ch;}
 .scard--red .scard__d,.scard--outline .scard__d{color:var(--mute-ink);}
 .scard__dots{
-  position:absolute;right:-40px;bottom:-40px;width:220px;height:220px;
-  background-image:var(--halftone);background-size:22px 22px;opacity:.4;pointer-events:none;
+  position:absolute;right:-40px;bottom:-40px;width:240px;height:240px;
+  background-image:var(--halftone);background-size:13px 13px;opacity:.62;pointer-events:none;
 }
 .scard--red .scard__dots,.scard--outline .scard__dots{background-image:var(--halftone-ink);}
 
