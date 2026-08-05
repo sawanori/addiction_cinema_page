@@ -8,4 +8,7 @@
 # Web掲載用に縮小したスチールは assets/films/ に別途書き出して、そちらだけを追跡する。
 assets/film/
 
+# ナビゲーターの原本写真（6.4MB）。Web用に切り出した assets/navigator/ だけを追跡する
+assets/nagigater/
+
 .DS_Store

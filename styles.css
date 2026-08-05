@@ -358,6 +358,56 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
 .film__d{display:block;margin-top:10px;font-size:13.5px;line-height:1.95;max-width:60ch;}
 .films__note{margin-top:clamp(20px,2.4vw,32px);font-size:12.5px;color:var(--mute-ink);}
 
+/* ---------- フェスティバル・ナビゲーター ----------
+   暗い面（#111）に置く。写真には上映作品と同じ網点をかけて、刷り物の世界観を保つ。
+   ローズ地のセクションが4つ続く並びの中で、ここだけ暗くしてリズムを切る。 */
+.navigator__grid{
+  display:grid;grid-template-columns:minmax(0,.38fr) minmax(0,.62fr);
+  gap:clamp(24px,4vw,60px);align-items:start;
+}
+.navigator__img{position:relative;margin:0;aspect-ratio:3/4;overflow:hidden;background:var(--ink);}
+.navigator__img img{
+  width:100%;height:100%;object-fit:cover;
+  filter:saturate(.9) contrast(1.03);transition:transform .7s ease,filter .5s ease;
+}
+.navigator__grid:hover .navigator__img img{transform:scale(1.03);filter:none;}
+.navigator__img::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:var(--halftone-ink);background-size:9px 9px;opacity:.28;mix-blend-mode:multiply;
+}
+.navigator__badge{
+  position:absolute;left:0;top:0;z-index:2;background:var(--ink);color:var(--bone);
+  font-family:var(--font-en);font-weight:700;font-size:12.5px;letter-spacing:.1em;
+  text-transform:uppercase;padding:6px 12px;
+}
+.navigator__k{display:block;margin-top:14px;color:var(--red);}
+.navigator__name{
+  display:block;margin-top:10px;font-weight:900;
+  font-size:clamp(30px,3.8vw,54px);line-height:1.18;letter-spacing:.01em;
+}
+.navigator__en{
+  display:block;margin-top:6px;
+  font-family:var(--font-en);font-weight:700;font-size:14px;letter-spacing:.06em;color:var(--red);
+}
+.navigator__lead{
+  margin-top:22px;font-weight:700;
+  font-size:clamp(16px,1.5vw,21px);line-height:1.85;max-width:44ch;
+}
+.navigator__d{margin-top:16px;color:var(--mute);font-size:14.5px;line-height:2;max-width:62ch;}
+.navigator__facts{
+  margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,.16);
+  list-style:none;display:grid;gap:12px;
+}
+.navigator__facts li{
+  display:grid;grid-template-columns:112px minmax(0,1fr);gap:16px;
+  font-size:13px;line-height:1.85;color:var(--mute);
+}
+.navigator__facts b{
+  font-family:var(--font-en);font-weight:700;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--red);padding-top:3px;
+}
+.navigator__note{margin-top:22px;font-size:12.5px;line-height:1.9;color:var(--mute);}
+
 /* ---------- 記事カード（黒3枚） ---------- */
 .editorial{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
 .ecard{
@@ -543,6 +593,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
   .films{grid-template-columns:repeat(2,1fr);}
   .film{grid-column:span 1;}
   .film--lead{grid-column:span 2;}
+  .navigator__grid{grid-template-columns:minmax(0,.44fr) minmax(0,.56fr);}
   .news{grid-template-columns:repeat(2,1fr);}
   .footer__cols{grid-template-columns:repeat(3,1fr);}
   .newsletter__grid{grid-template-columns:1fr;}
@@ -582,6 +633,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
   .films{grid-template-columns:1fr;}
   .film{grid-column:span 1;}
   .film--lead{grid-column:span 1;}
+  .navigator__grid{grid-template-columns:1fr;}
+  .navigator__img{aspect-ratio:3/4;max-width:420px;}
+  .navigator__facts li{grid-template-columns:1fr;gap:2px;}
   .footer__cols{grid-template-columns:repeat(2,1fr);}
   .hero__meta{gap:0 24px;}
   .hero{min-height:clamp(460px,86vh,640px);}
