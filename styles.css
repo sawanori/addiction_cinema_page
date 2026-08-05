@@ -267,6 +267,30 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
 .panel__lead em{font-style:normal;color:var(--white);}
 .panel__body{margin-top:22px;color:var(--mute);font-size:15px;line-height:2;max-width:56ch;}
 
+/* Why Now は姿勢表明のリードが縦に長く、見出しだけの左カラムが大きく空く。
+   PC では背景説明をカードにして左下へ落とし、リードの下端とそろえる。
+   スマートフォンでは1カラムのまま、見出し→リード→背景説明の素の並びに戻す。 */
+.panel__note__k{
+  display:block;margin-bottom:10px;
+  font-family:var(--font-en);font-weight:700;font-size:11px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--red);
+}
+.panel__note p{color:var(--mute);font-size:13.5px;line-height:1.95;}
+@media (min-width:1081px){
+  .panel__grid--why{grid-template-rows:auto 1fr;}
+  .panel__grid--why>:first-child{grid-column:1;grid-row:1;}
+  .panel__grid--why>.panel__lead{grid-column:2;grid-row:1/span 2;}
+  .panel__grid--why>.panel__note{
+    grid-column:1;grid-row:2;align-self:end;
+    border:2px solid var(--red);padding:clamp(20px,2vw,28px);
+  }
+}
+@media (max-width:1080px){
+  .panel__note{margin-top:22px;}
+  .panel__note__k{display:none;}
+  .panel__note p{font-size:15px;line-height:2;max-width:56ch;}
+}
+
 /* ---------- セクション見出し ---------- */
 .section{padding:clamp(48px,6vw,96px) 0;}
 .section__head{
